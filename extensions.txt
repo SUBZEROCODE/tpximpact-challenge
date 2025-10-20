@@ -1,0 +1,9 @@
+# Possible Extension Ideas
+
+Here I will summarise extensions and it will be where I record ideas and thoughts during the project.
+
+- Could use Thymeleaf for providing the webpages using thymeleaf as an extension instead of just Angular.
+
+- Could use testcontainers within Java 25 to build docker containers for testing as an interesting extra.
+
+- Could showcase some interesting features of Java 25 like stream operators and Record data structures.
