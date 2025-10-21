@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 public class BasicHealthController {
-        @GetMapping("/api/url-shortener/v1/health")
+        @GetMapping("/api/v1/url-shortener/health")
         public ResponseEntity<String> healthCheck() {
             return new ResponseEntity<String>("Java Spring is ready to serve the API", HttpStatus.OK);
         }

@@ -16,4 +16,4 @@ Acceptance criteria: Boilerplated code with logic for Controller methods matchin
 ### BUG-100-api-context-path-fix
 As a java tester I want to be able to avoid needing to provide the full URL path, this should be inherited by the test classes from application.properties/application-test.properties file.
 Acceptance criteria: The context should be passed correctly with "server.servlet.context-path" for controllers and their tests.
-e.g. `mockMvc.perform(get("/health")` should work and not require additional "/api/url-shortener/v1/" path to be added in to the mockmvc test.
+e.g. `mockMvc.perform(get("/health")` should work and not require additional "/api/v1/url-shortener/" path to be added in to the mockmvc test.

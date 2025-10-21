@@ -17,7 +17,7 @@ public class BasicHealthControllerTest {
     @Test
     void healthCheckGetShouldReturnStatusOKAndStringReadyToServeAPI() throws Exception {
         //TODO: Context needs fixing so that the path is correctly being inherited in tests.
-        mockMvc.perform(get("/api/url-shortener/v1/health"))
+        mockMvc.perform(get("/api/v1/url-shortener/health"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Java Spring is ready to serve the API"));
     }

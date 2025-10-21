@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/url-shortener/v1/{alias}")
+@RequestMapping("/api/v1/url-shortener/{alias}")
 public class AliasMappingController {
-    
-    @GetMapping("")
-    public ResponseEntity<String> checkAliasForUrlRedirect(@PathVariable String alias) {
-        String myAlias = "some-test-alias";
 
+    @GetMapping("")
+    public ResponseEntity<String> getUrlRedirectForAGivenAlias(@PathVariable String alias) {
+        // TODO: Temporary hardcoded "alias" for testing purpose along with println.
+        String myAlias = "some-test-alias";
         System.out.println("Alias received: " +  alias);
 
         // TODO: Will need to check the datastore for the alias and return the correct url redirect
@@ -28,5 +28,16 @@ public class AliasMappingController {
         // if(request.getServletPath() is found in datastore) {
         //     return new ResponseEntity<String>("Redirecting to full URL", HttpStatus.FOUND);
         // }
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<String> deleteShortenedUrlMatchingAlias(@PathVariable String alias) {
+
+        // if alias is found in the datastore then proceed to deleting matching data entry
+        //return new ResponseEntity<String>("Successfully deleted", HttpStatus.NO_CONTENT)
+
+        //else
+        return new ResponseEntity<String>("Alias not found", HttpStatus.NOT_FOUND);
+
     }
 }
