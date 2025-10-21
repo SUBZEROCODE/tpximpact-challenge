@@ -14,6 +14,8 @@ public class AliasMappingController {
 
     @GetMapping("")
     public ResponseEntity<String> getUrlRedirectForAGivenAlias(@PathVariable String alias) {
+        // @PathVariable has a default of true for required, so no need to explicitly set it.
+        
         // TODO: Temporary hardcoded "alias" for testing purpose along with println.
         String myAlias = "some-test-alias";
         System.out.println("Alias received: " +  alias);
@@ -32,6 +34,7 @@ public class AliasMappingController {
 
     @DeleteMapping("")
     public ResponseEntity<String> deleteShortenedUrlMatchingAlias(@PathVariable String alias) {
+        // @PathVariable has a default of true for required, so no need to explicitly set it.
 
         // if alias is found in the datastore then proceed to deleting matching data entry
         //return new ResponseEntity<String>("Successfully deleted", HttpStatus.NO_CONTENT)

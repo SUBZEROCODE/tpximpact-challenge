@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,5 +29,13 @@ public class UrlShortenControllerTest {
                 .content("{customAlias: \"my-alias\", fullUrl: \"http://example.com/some/long/url\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid input or alias already taken"));
+    }
+
+    @Test
+    void listAllShortenedUrlsGetEndpointShouldReturnEmptyArray() throws Exception {
+        mockMvc.perform(get("/api/v1/url-shortener/urls")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+                //.andExpect(content().string("[]"));
     }
 }

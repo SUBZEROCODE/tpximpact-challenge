@@ -2,6 +2,8 @@ package com.subzero.tpximpact_challenge.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.models.AliasWithUrlMapping;
+
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @RequestMapping("/api/v1/url-shortener")
@@ -45,10 +44,13 @@ public class UrlShortenController {
         // }
 
         // Only if successfull and not taken : `return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED)`;
-        return new ResponseEntity<String>("Alias not found", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
     }
-    
 
-
-    
+    @GetMapping("/urls")
+    public ResponseEntity<AliasWithUrlMapping[]> listAllShortenedUrls() {
+        // TODO: Implement repository logic to return all shortened urls with repo.findAll().
+        return new ResponseEntity<AliasWithUrlMapping[]>(new AliasWithUrlMapping[]{},HttpStatus.OK);
+    }
+ 
 }
