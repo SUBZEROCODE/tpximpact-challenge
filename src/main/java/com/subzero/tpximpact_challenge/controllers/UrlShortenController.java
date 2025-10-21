@@ -22,7 +22,6 @@ public class UrlShortenController {
         Optional<String> customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
 
         if(customAliasOptional.isPresent()){
-            String customAlias = customAliasOptional.get();
         }
 
         // try {
@@ -41,7 +40,7 @@ public class UrlShortenController {
         // }
 
         // Only if successfull and not taken : `return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED)`;
-        return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Alias not found", HttpStatus.BAD_REQUEST);
     }
     
 
