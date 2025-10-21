@@ -2,7 +2,7 @@ package com.subzero.tpximpact_challenge.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.models.AliasWithUrlMapping;
+import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 
 import java.util.Optional;
 
