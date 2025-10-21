@@ -1,9 +1,27 @@
+# Definite inclusions for this project.
+Under this heading, I will detail the additional features I have added with a small justification for their use/implementation.
+- ResponseEntity class => this is a great way to return an object from the api with a return statuscode (from HttpStatus enumerated type).
+
+
 # Possible Extension Ideas
 
 Here I will summarise extensions and it will be where I record ideas and thoughts during the project.
+This is mainly so that I can record my ideas but also can add my overnight eureka moments (and what I remember doing from previous projects in Java Spring).
 
 - Could use Thymeleaf for providing the webpages using thymeleaf as an extension instead of just Angular.
 
 - Could use testcontainers within Java 25 to build docker containers for testing as an interesting extra.
 
 - Could showcase some interesting features of Java 25 like stream operators and Record data structures.
+
+- Gitlab CI/CD integrations with gitlab-ci.yaml file
+
+- Branch and release strategy using dev/test and prod branches and building appropriate containers with specific properties.
+
+- Security implementation with WebSecurityConfigurerAdapter and in particular - use of CORS to limit which urls frontend traffic can send to and enforce security by design.
+
+- Endpoint E2E testing (possibly could use curl/postman and add to demo).
+
+- Use of tool such as prometheus to provide actuator endpoints to check for service and container health.
+
+- Portainer showcase as an example of how we can manage these containerised ecosystems at scale.

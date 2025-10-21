@@ -1,4 +1,4 @@
-package com.subzero.tdximpact_challenge;
+package com.subzero.tpximpact_challenge;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
