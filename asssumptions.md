@@ -7,3 +7,13 @@ Usually I'd expect my feature requirements and expectations for a given sprint t
 ### FT-100-java-spring-initial-setup
 As a java developer I want to have a basic program written in Java Spring and tested with JUnit for MVC usage, compiled and ready for coming iterations.
 Acceptance criteria: Java program compiles without errors and tests pass for basic skeleton scenarios such as hello world.
+
+### FT-101-openapi-boilerplate-code
+As a java developer I want to create boilerplated code to mimic the sorts of logic which will be required.
+This will enable future iterations to use this logic and provides a good template for another developer to work on.
+Acceptance criteria: Boilerplated code with logic for Controller methods matching their openapi specifications, parameter testing is required for basic openapi related specifications but not the inner service logic (e.g. The method returns 200 and "OK").
+
+### BUG-100-api-context-path-fix
+As a java tester I want to be able to avoid needing to provide the full URL path, this should be inherited by the test classes from application.properties/application-test.properties file.
+Acceptance criteria: The context should be passed correctly with "server.servlet.context-path" for controllers and their tests.
+e.g. `mockMvc.perform(get("/health")` should work and not require additional "/api/url-shortener/v1/" path to be added in to the mockmvc test.
