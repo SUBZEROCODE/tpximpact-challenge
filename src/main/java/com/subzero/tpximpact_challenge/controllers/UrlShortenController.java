@@ -1,7 +1,12 @@
 package com.subzero.tpximpact_challenge.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
+
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -13,8 +18,12 @@ public class UrlShortenController {
     public ResponseEntity<String> shortenUrlRequest(@RequestBody String jsonBody) {
         JSONObject bodyAsJsonObject = new JSONObject(jsonBody);
 
-        String fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
-        Optional<String> customAliasOptional = bodyAsJsonObject.getString("customAlias");
+        // String fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
+        Optional<String> customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
+
+        if(customAliasOptional.isPresent()){
+            String customAlias = customAliasOptional.get();
+        }
 
         // try {
         //     // if(customAliasOptional.isPresent()){
@@ -32,7 +41,7 @@ public class UrlShortenController {
         // }
 
         // Only if successfull and not taken : `return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED)`;
-        return new ResponseEntity<String>("Alias not found", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
     }
     
 
