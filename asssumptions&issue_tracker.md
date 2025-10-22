@@ -26,3 +26,8 @@ Acceptance criteria: Angular serves html content to the localhost domain and bas
 ### FT-201-angular-services-and-api-integration
 As a developer of the url-shortener site I want to be able to see the outputs coming from the backend UI.
 Acceptance criteria: Designed and implemented a service to prove that backend interactions are being sent back to UI as expected.
+
+### BUG-200-spring-ldap-security-breaking-tests
+As a tester I want to be able to run my controller tests (`@webmvctest`) without needing to deal with issues related to CORS.
+Currently these controller tests are having to exclude "SecurityAutoConfiguration.class" from building its custom Beans which are conflicting with tests and expecting authorised logins etc.
+Acceptance criteria: Tests pass without the need to exclude SecurityAutoConfiguration.class, it may be the case this is suitable so further investigation is required.

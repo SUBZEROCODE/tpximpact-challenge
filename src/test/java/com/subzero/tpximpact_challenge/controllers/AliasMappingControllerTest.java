@@ -2,6 +2,7 @@ package com.subzero.tpximpact_challenge.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.security.autoconfigure.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -10,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@WebMvcTest(AliasMappingController.class)
+@WebMvcTest(value = AliasMappingController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class AliasMappingControllerTest {
 
     @Autowired
