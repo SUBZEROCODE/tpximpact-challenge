@@ -22,3 +22,7 @@ e.g. `mockMvc.perform(get("/health")` should work and not require additional "/a
 As an angular developer I want to have a frontend UI which will complement the backend API.
 This will include Karma as the testing suite and will add simple components to prove the angular frontend is working.
 Acceptance criteria: Angular serves html content to the localhost domain and basic karma tests are passing.
+
+### FT-201-angular-services-and-api-integration
+As a developer of the url-shortener site I want to be able to see the outputs coming from the backend UI.
+Acceptance criteria: Designed and implemented a service to prove that backend interactions are being sent back to UI as expected.
