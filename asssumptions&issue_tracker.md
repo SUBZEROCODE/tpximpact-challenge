@@ -3,7 +3,7 @@ I'm going to treat the feature expectations and requirements as their own iterat
 Usually I'd expect my feature requirements and expectations for a given sprint to come from a project management tool such as JIRA, and this document is intended to mimic this issue ticket style.
 
 ## Issue Tracker of Feature branches:
-The numbering is slightly arbitrary it just depends on what issues had come before, I've selected 001 onwards for documentation and additional (docker requirements),100 for frontend and 200 for backend
+The numbering is slightly arbitrary it just depends on what issues had come before, I've selected 001 onwards for documentation and additional (docker requirements),100 for frontend and 200 for backend.
 
 ### FT-100-java-spring-initial-setup - merged 🚀
 As a java developer I want to have a basic program written in Java Spring and tested with JUnit for MVC usage, compiled and ready for coming iterations.
