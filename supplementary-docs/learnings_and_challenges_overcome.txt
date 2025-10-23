@@ -1,0 +1,12 @@
+# During this project I have faced some interesting challenges and learned some features of Java 25 and the newer variants of Java Spring Boot.
+
+- Maven -> I've used maven before many years ago but its a new tool for me at the enterprise project size.
+=> Previously used Gradle in my past projects and they are pretty similar with a few small differences in how they compile and run code.
+
+- WebSecurityConfigurerAdapter -> Now this is called SecurityConfiguration and uses Beans and lambda syntax
+=> This presented a challenge as it was breaking tests once imported via the POM.xml, current solution is to disable its auto-configuration of those beans within "MockHttpServletRequest" as it was conflicting with my SecurityConfiguration beans.
+=> CORS is always a fun topic because it restricts url communication between two entities unless the "url matchers" meet the security specifications. This was overcome by following the latest syntax changes for SecurityConfiguration.
+
+- Use of PathVariable at a dynamic level with a url.
+=> I've used PathVariable to retrieve what is passed to the GET method of the API before, but using this at a controller level with a dynamic route was a fun challenge.
+    - The key here was using String.format as when I was passing the string via the url otherwise it wasn't correctly being understood to be the path variable.

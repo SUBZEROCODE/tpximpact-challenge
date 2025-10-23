@@ -1,6 +1,13 @@
 # Definite inclusions for this project.
 Under this heading, I will detail the additional features I have added with a small justification for their use/implementation.
+
 - ResponseEntity class => this is a great way to return an object from the api with a return statuscode (from HttpStatus enumerated type).
+- MockMvcResultMatchers => static imports provide a nice way to get the "status()" and "content" of mockmvcs
+
+- WebMvcTest => Later variants of Java have started to use this as the standard over @SpringBootTest, it also works great with MockMvc which is an essential for controller mocking.
+- Mockito => On a similar note, more standard to all versions of java, I will be using Mockito's .when() syntax and other static imports where appropriate to mock service methods and those interactions.
+
+- Lombok => Lombok is a great way to annotate code cleanly for maintainability, but also reduced boilerplate code (avoiding tons of @Getter/@Setters like in the past to work with private variables)
 
 
 # Possible Extension Ideas
