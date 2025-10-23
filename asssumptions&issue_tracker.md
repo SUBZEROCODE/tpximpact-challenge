@@ -22,3 +22,7 @@ e.g. `mockMvc.perform(get("/health")` should work and not require additional "/a
 As an angular developer I want to have a frontend UI which will complement the backend API.
 This will include Karma as the testing suite and will add simple components to prove the angular frontend is working.
 Acceptance criteria: Angular serves html content to the localhost domain and basic karma tests are passing.
+
+### FT-001-document-build-instructions
+As a developer I want to be able to build and run the code (frontend and backend java spring api) locally.
+Acceptance criteria: readme files are created detailing approach for building and running the code.
