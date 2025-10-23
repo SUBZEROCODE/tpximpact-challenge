@@ -7,8 +7,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,9 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UrlShortenControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
     void shortenUrlRequestPostEndpointShouldReturnBadRequestGivenNoImplementationCurrently() throws Exception {

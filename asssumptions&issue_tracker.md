@@ -32,3 +32,7 @@ Acceptance criteria: Designed and implemented a service to prove that backend in
 As a tester I want to be able to run my controller tests (`@webmvctest`) without needing to deal with issues related to CORS.
 Currently these controller tests are having to exclude "SecurityAutoConfiguration.class" from building its custom Beans which are conflicting with tests and expecting authorised logins etc.
 Acceptance criteria: Tests pass without the need to exclude SecurityAutoConfiguration.class, it may be the case this is already suitable so further investigation is required.
+
+### FT-001-document-build-instructions
+As a developer I want to be able to build and run the code (frontend and backend java spring api) locally.
+Acceptance criteria: readme files are created detailing approach for building and running the code.
