@@ -69,6 +69,10 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>3.0.0-M1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -97,6 +101,27 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-checkstyle-plugin</artifactId>
+			<version>3.6.0</version>
+			<configuration>
+				<configLocation>config/checkstyle/checkstyle.xml</configLocation>
+				<!-- <suppressionsLocation>config/checkstyle/suppressions.xml</suppressionsLocation>
+				<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression> -->
+				<consoleOutput>true</consoleOutput>
+				<failsOnError>true</failsOnError>
+			</configuration>
+			<executions>
+				<execution>
+					<?m2e execute onConfiguration?>
+				<phase>validate</phase>
+				<goals>
+					<goal>check</goal>
+				</goals>
+				</execution>
+			</executions>
 			</plugin>
 		</plugins>
 	</build>

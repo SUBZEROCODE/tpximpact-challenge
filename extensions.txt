@@ -32,3 +32,5 @@ This is mainly so that I can record my ideas but also can add my overnight eurek
 - Use of tool such as prometheus to provide actuator endpoints to check for service and container health.
 
 - Portainer showcase as an example of how we can manage these containerised ecosystems at scale.
+
+- Authentication layer with JWT token
