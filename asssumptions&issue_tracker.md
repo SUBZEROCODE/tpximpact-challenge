@@ -1,4 +1,11 @@
 # Assumptions made for this coding challenge.
+
+- If a user tries to send an "alias" to the api on route "/api/v1/url-shortener/{alias}" which is not there I will do nothing but return back Alias not found.
+=> Its assumed a user will always add the alias before wanting to get that redirect.
+
+- Its assumed that every record of alias, full-url and short-url will be complete.
+=> Therefore if we get a record matching a given alias a full-url and short-url will be gettable for that record.
+
 I'm going to treat the feature expectations and requirements as their own iterations by feature branch with the following identifiers for ease of use and clarification.
 Usually I'd expect my feature requirements and expectations for a given sprint to come from a project management tool such as JIRA, and this document is intended to mimic this issue ticket style.
 

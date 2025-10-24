@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 import java.util.Optional;
 
@@ -32,11 +33,17 @@ public class AliasMappingControllerTest {
     private final String baseUrl = "/api/v1/url-shortener/"; // replace with actual path
     
     @Test
-    void getUrlRedirectForAGivenAliasWithAMatchedAliasShouldReturnStatusFound() throws Exception {
-        String testAlias = "some-test-alias";
+    void getUrlRedirectForAGivenAliasWithAMatchedAliasShouls302AndRedirectToFullUrl() throws Exception {
+        String testAlias = "my-custom-alias";
+
+        AliasWithUrlMapping mockMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+        
+        when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAlias)).thenReturn(Optional.of(mockMapping));
+        
          mockMvc.perform(get(String.format(baseUrl +"/%s", testAlias)))
                 .andExpect(status().isFound())
-                .andExpect(content().string("Redirect to the original URL"));
+                .andExpect(content().string("Redirect to the original URL"))
+                .andExpect(header().string("Location", "https://example.com/very/long/url"));
     }
 
     @Test
