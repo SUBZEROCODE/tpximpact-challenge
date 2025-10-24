@@ -19,7 +19,7 @@ class AliasUrlMappingRepositoryTest {
     private AliasUrlMappingRepository aliasUrlMappingRepository;
 
     @Test
-    void testSaveAndFindAll() {
+    void testSaveAndFindAllShouldReturnAllSavedMappings() {
         AliasWithUrlMapping aliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
         aliasUrlMappingRepository.save(aliasWithUrlMapping);
 
@@ -33,5 +33,23 @@ class AliasUrlMappingRepositoryTest {
         assertEquals(urlMappingsReturned.get(0), aliasWithUrlMapping); 
         assertEquals(urlMappingsReturned.get(1), aliasWithUrlMappingSecond); 
         assertEquals(urlMappingsReturned.size(), 2);
+    }
+
+    @Test 
+    void saveTwoUrlMappingsAndDeleteShouldOnlyReturnOneAfterDeletion() {
+        AliasWithUrlMapping aliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+        aliasUrlMappingRepository.save(aliasWithUrlMapping);
+
+        AliasWithUrlMapping aliasWithUrlMappingSecond = MockAliasUrlMappingBuilder.getCustomStubbedAliasWithUrlMappingForTesting("some-testing-alias", "https://www.example.test.com/long/url", "http://localhost:8080/some-testing-alias");
+        aliasUrlMappingRepository.save(aliasWithUrlMappingSecond);
+
+        List<AliasWithUrlMapping> urlMappingsReturned = aliasUrlMappingRepository.findAll();
+        assertEquals(urlMappingsReturned.size(), 2);
+
+        aliasUrlMappingRepository.delete(aliasWithUrlMapping);
+
+        List<AliasWithUrlMapping> urlMappingsReturnedAfterDelete = aliasUrlMappingRepository.findAll();
+        assertEquals(urlMappingsReturnedAfterDelete.get(0), aliasWithUrlMappingSecond); 
+        assertEquals(urlMappingsReturnedAfterDelete.size(), 1);
     }
 }
