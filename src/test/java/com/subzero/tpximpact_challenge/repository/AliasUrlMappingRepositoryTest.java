@@ -1,20 +1,18 @@
 package com.subzero.tpximpact_challenge.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
+import org.springframework.test.context.ActiveProfiles;
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles(value = "test")
 class AliasUrlMappingRepositoryTest {
 
     @Autowired
