@@ -5,16 +5,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.security.autoconfigure.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
+import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
+import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest(value = UrlShortenController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class UrlShortenControllerTest {
+
+    @MockitoBean
+    private AliasUrlMappingService aliasUrlMappingService;
+    
     @Autowired
     private MockMvc mockMvc;
 
@@ -31,7 +43,21 @@ public class UrlShortenControllerTest {
     void listAllShortenedUrlsGetEndpointShouldReturnEmptyArray() throws Exception {
         mockMvc.perform(get("/api/v1/url-shortener/urls")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-                //.andExpect(content().string("[]"));
+                .andExpect(status().isOk())
+                .andExpect(content().string("[]"));
+    }
+
+    @Test
+    void listAllShortenedUrlsGetEndpointShouldReturnArrayMatchingTheFindAllOnTheRepo() throws Exception {
+        AliasWithUrlMapping mockMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+
+        when(aliasUrlMappingService.findAllAliasWithUrlMappingRecordsInRepo()).thenReturn(List.of(mockMapping));
+
+        String expectedResult = "[{\"alias\":\"my-custom-alias\",\"fullUrl\":\"https://example.com/very/long/url\",\"shortUrl\":\"http://localhost:8080/my-custom-alias\"}]";
+
+        mockMvc.perform(get("/api/v1/url-shortener/urls")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedResult));
     }
 }
