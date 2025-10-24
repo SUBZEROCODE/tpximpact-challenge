@@ -30,8 +30,6 @@ public class AliasMappingControllerTest {
     private MockMvc mockMvc;
 
     private final String baseUrl = "/api/v1/url-shortener/"; // replace with actual path
-
-    // TODO: Tricky tests due to PathVariable in controller, maybe need to use MockHttpServletRequest directly and set the path instead. 
     
     @Test
     void getUrlRedirectForAGivenAliasWithAMatchedAliasShouldReturnStatusFound() throws Exception {
