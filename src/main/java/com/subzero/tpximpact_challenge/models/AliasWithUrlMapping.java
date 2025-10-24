@@ -9,12 +9,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
 @EqualsAndHashCode
+@ToString
 @Table(name = "alias_with_url_mapping")
 public class AliasWithUrlMapping {
 
