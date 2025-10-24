@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - 'Release*'  # Matches any branch starting with 'Release'
-      - 'FT-102-alias-with-url-mapping-repository'
 
 jobs:
   build:
