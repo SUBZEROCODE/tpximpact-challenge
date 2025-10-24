@@ -3,8 +3,8 @@ package com.subzero.tpximpact_challenge.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,7 @@ import lombok.Setter;
 
 @Entity
 @EqualsAndHashCode
+@Table(name = "alias_with_url_mapping")
 public class AliasWithUrlMapping {
 
     @Id
