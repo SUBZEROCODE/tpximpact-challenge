@@ -44,9 +44,16 @@ As a developer I want to have a branch which will contain release staged code.
 Acceptance criteria: Github action of CI/CD passing for this Release branch when merged into dev.
 This release should be a basic implementation of frontend and backend and is to prove that the Release functionality is working as intended 
 e.g. lint, build, test and then build of artifacts end to end.
+Note: This will be release 0.0.1
 
 ### FT-103-checkstyle-fix-lints-checkstyle-9.3-ruleset
 As a developer I want to have a clean run of CI/CD for lints.
 Currently using `mvn checkstyle:check`, which does not break build if Checkstyle is not satisfied, this will need updating eventually.
 Acceptance criteria: Checkstyle passes with very minimal errors for Checkstyle 9.3
 Priority: lower priority over the functionality of the task.
+
+### Release-persisted-url-shortener-records
+As a developer I want to have a persisted store to save records into, this will also encompass changes required to bring in:
+Repositories, Services and DataSource to set up the db and provide required methods to interact using SQL.
+Acceptance criteria: Release provides functionality to persist data across restarts, this is visualised on the UI as a list of those persisted data and updates on changes.
+Note: This will be release 0.0.2
