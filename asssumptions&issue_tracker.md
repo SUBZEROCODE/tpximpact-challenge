@@ -36,3 +36,11 @@ Acceptance criteria: Tests pass without the need to exclude SecurityAutoConfigur
 ### FT-001-document-build-instructions - merged 🚀
 As a developer I want to be able to build and run the code (frontend and backend java spring api) locally.
 Acceptance criteria: readme files are created detailing approach for building and running the code.
+
+### Release-basic-angular-and-api-integration
+Note: I also developed a simple Github Actions pipeline when looking into why eslint was not working.
+
+As a developer I want to have a branch which will contain release staged code.
+Acceptance criteria: Github action of CI/CD passing for this Release branch when merged into dev.
+This release should be a basic implementation of frontend and backend and is to prove that the Release functionality is working as intended 
+e.g. lint, build, test and then build of artifacts end to end.
