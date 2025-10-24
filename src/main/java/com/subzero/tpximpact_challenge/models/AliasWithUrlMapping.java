@@ -1,15 +1,23 @@
 package com.subzero.tpximpact_challenge.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Entity
+@EqualsAndHashCode
 public class AliasWithUrlMapping {
 
+    @Id
     @Getter @Setter
     @Schema(example = "my-custom-alias")
     private String alias;

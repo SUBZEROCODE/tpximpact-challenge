@@ -28,7 +28,7 @@ public class MockAliasUrlMappingBuilder {
     }
 
     public static AliasWithUrlMapping getStubbedAliasWithUrlMappingForTesting(){
-        return getCustomStubbedAliasWithUrlMappingForTesting(null, null, null);
+        return getCustomStubbedAliasWithUrlMappingForTesting("", "", "");
     }
 
 }
