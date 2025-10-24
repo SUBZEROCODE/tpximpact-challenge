@@ -112,6 +112,7 @@
 				<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression> -->
 				<consoleOutput>true</consoleOutput>
 				<failsOnError>false</failsOnError>
+				<skip>${checkstyle.skip}</skip>
 			</configuration>
 			<executions>
 				<execution>
