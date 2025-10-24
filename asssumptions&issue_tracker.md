@@ -57,3 +57,7 @@ As a developer I want to have a persisted store to save records into, this will 
 Repositories, Services and DataSource to set up the db and provide required methods to interact using SQL.
 Acceptance criteria: Release provides functionality to persist data across restarts, this is visualised on the UI as a list of those persisted data and updates on changes.
 Note: This will be release 0.0.2
+
+### FT-102-alias-with-url-mapping-repository
+As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
+Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
