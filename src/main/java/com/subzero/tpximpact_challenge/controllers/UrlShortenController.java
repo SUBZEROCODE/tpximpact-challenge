@@ -3,10 +3,12 @@ package com.subzero.tpximpact_challenge.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
+import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
 
 import java.util.Optional;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/v1/url-shortener")
 public class UrlShortenController {
+
+    @Autowired
+    private AliasUrlMappingService aliasUrlMappingService;
 
     @PostMapping(value = "/shorten", consumes = "application/json")
     public ResponseEntity<String> shortenUrlRequest(@RequestBody String jsonBody) {
@@ -49,8 +54,8 @@ public class UrlShortenController {
 
     @GetMapping("/urls")
     public ResponseEntity<AliasWithUrlMapping[]> listAllShortenedUrls() {
-        // TODO: Implement repository logic to return all shortened urls with repo.findAll().
-        return new ResponseEntity<AliasWithUrlMapping[]>(new AliasWithUrlMapping[]{},HttpStatus.OK);
+        AliasWithUrlMapping[] aliasWithUrlMappingsArray = aliasUrlMappingService.findAllAliasWithUrlMappingRecordsInRepo().toArray(AliasWithUrlMapping[]::new);
+        return new ResponseEntity<AliasWithUrlMapping[]>(aliasWithUrlMappingsArray, HttpStatus.OK);
     }
  
 }
