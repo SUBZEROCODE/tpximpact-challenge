@@ -3,7 +3,7 @@ I'm going to treat the feature expectations and requirements as their own iterat
 Usually I'd expect my feature requirements and expectations for a given sprint to come from a project management tool such as JIRA, and this document is intended to mimic this issue ticket style.
 
 ## Issue Tracker of Feature branches:
-The numbering is slightly arbitrary it just depends on what issues had come before, I've selected 001 onwards for documentation and additional (docker requirements),100 for frontend and 200 for backend.
+The numbering is slightly arbitrary it just depends on what issues had come before, I've selected 001 onwards for documentation and additional (docker requirements),100 for backend and 200 for frontend.
 
 ### FT-100-java-spring-initial-setup - merged 🚀
 As a java developer I want to have a basic program written in Java Spring and tested with JUnit for MVC usage, compiled and ready for coming iterations.
@@ -28,7 +28,7 @@ Acceptance criteria: Angular serves html content to the localhost domain and bas
 As a developer of the url-shortener site I want to be able to see the outputs coming from the backend UI.
 Acceptance criteria: Designed and implemented a service to prove that backend interactions are being sent back to UI as expected.
 
-### BUG-100-spring-ldap-security-breaking-tests
+### BUG-101-spring-ldap-security-breaking-tests
 As a tester I want to be able to run my controller tests (`@webmvctest`) without needing to deal with issues related to CORS.
 Currently these controller tests are having to exclude "SecurityAutoConfiguration.class" from building its custom Beans which are conflicting with tests and expecting authorised logins etc.
 Acceptance criteria: Tests pass without the need to exclude SecurityAutoConfiguration.class, it may be the case this is already suitable so further investigation is required.
@@ -45,7 +45,7 @@ Acceptance criteria: Github action of CI/CD passing for this Release branch when
 This release should be a basic implementation of frontend and backend and is to prove that the Release functionality is working as intended 
 e.g. lint, build, test and then build of artifacts end to end.
 
-### FT-200-checkstyle-fix-lints-checkstyle-9.3-ruleset
+### FT-103-checkstyle-fix-lints-checkstyle-9.3-ruleset
 As a developer I want to have a clean run of CI/CD for lints.
 Currently using `mvn checkstyle:check`, which does not break build if Checkstyle is not satisfied, this will need updating eventually.
 Acceptance criteria: Checkstyle passes with very minimal errors for Checkstyle 9.3

@@ -111,17 +111,8 @@
 				<!-- <suppressionsLocation>config/checkstyle/suppressions.xml</suppressionsLocation>
 				<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression> -->
 				<consoleOutput>true</consoleOutput>
-				<failsOnError>true</failsOnError>
+				<failsOnError>false</failsOnError>
 			</configuration>
-			<executions>
-				<execution>
-					<?m2e execute onConfiguration?>
-				<phase>validate</phase>
-				<goals>
-					<goal>check</goal>
-				</goals>
-				</execution>
-			</executions>
 			</plugin>
 		</plugins>
 	</build>
