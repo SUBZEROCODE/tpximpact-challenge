@@ -9,6 +9,8 @@ Under this heading, I will detail the additional features I have added with a sm
 
 - Lombok => Lombok is a great way to annotate code cleanly for maintainability, but also reduced boilerplate code (avoiding tons of @Getter/@Setters like in the past to work with private variables)
 
+- InjectMocks => This is great for basic spring implmentation integrations (usually when not nested methods in methods requiring each other)
+
 
 # Possible Extension Ideas
 
