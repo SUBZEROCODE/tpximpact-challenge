@@ -8,7 +8,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  branch-cicd-pipeline:
     runs-on: ubuntu-latest
 
     steps:
