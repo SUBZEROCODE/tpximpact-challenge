@@ -26,7 +26,10 @@ jobs:
           fi
 
   branch-cicd-pipeline:
+    needs: extract-commit-message
+    if: needs.extract-commit-message.outputs.matched == 'true'
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
