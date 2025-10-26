@@ -68,7 +68,7 @@ jobs:
 
   deploy-ui:
     needs: branch-cicd-pipeline
-    uses: ./.github/workflows/deploy-ui-as-container.yml
+    uses: ./.github/workflows/deploy-api-as-container.yml
     with:
       image_name: url-shortener
       image_tag: "${{ needs.branch-cicd-pipeline.outputs.branch_name }}-testing"
