@@ -7,6 +7,7 @@ import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
 
 import java.util.Optional;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,31 +26,39 @@ public class UrlShortenController {
 
     @PostMapping(value = "/shorten", consumes = "application/json")
     public ResponseEntity<String> shortenUrlRequest(@RequestBody String jsonBody) {
-        JSONObject bodyAsJsonObject = new JSONObject(jsonBody);
+        Optional<String> customAliasOptional;
+        String fullUrlProvided;
 
-        // String fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
-        Optional<String> customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
+        // JSON serialisation is always something which can go wrong
+        // Or the required parameters are not provided "getString()" can also return JSONException.
+        try{
+            JSONObject bodyAsJsonObject = new JSONObject(jsonBody);
+            fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
+            customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
 
-        if(customAliasOptional.isPresent()){
+            if(!customAliasOptional.isPresent()){
+                return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            }
+        } catch (JSONException e){
+            return new ResponseEntity<>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+        }
+        
+        String customAliasProvided = customAliasOptional.get();
+
+        // Check if alias has been saved before
+        Optional<AliasWithUrlMapping> aliasWithUrlMappingStoredInDb = aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(customAliasProvided);
+
+        if(aliasWithUrlMappingStoredInDb.isPresent()){
+            return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
         }
 
-        // try {
-        //     // if(customAliasOptional.isPresent()){
-        //         // Need to check if that alias has been used before, if it has then return 400.
-        //         //return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
-
-        //     // If not used, then return the url and save the new alias to the repo
-            
-        //     // Always need to check if the url has been saved before, if it hasn't then need to map the long url within datastore.
-
-        //     // Application logic to shorten the URL will go here.
-        //     // Need to also add repo method logic next
-        // } catch (MalformedURLException e) {
-        //     return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
-        // }
-
-        // Only if successfull and not taken : `return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED)`;
-        return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+        try {
+            AliasWithUrlMapping aliasToSave = new AliasWithUrlMapping(customAliasProvided, fullUrlProvided);
+            aliasUrlMappingService.saveAliasWithUrlMappingToRepo(aliasToSave);
+        } catch (Exception e){
+                return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED);
     }
 
     @GetMapping("/urls")

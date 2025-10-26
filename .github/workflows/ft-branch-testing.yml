@@ -1,0 +1,56 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Test Feature Branch of Url Shortener (if commit matches "run-ft-branch-cicd")
+
+on:
+  push:
+    branches:
+      - 'FT-*'
+
+jobs:
+  extract-commit-message:
+    runs-on: ubuntu-latest
+    outputs:
+      matched: ${{ steps.check.outputs.matched }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "Commit message: $msg"
+          if [[ "$msg" == *"run-ft-branch-cicd"* ]]; then
+            echo "matched=true" >> $GITHUB_OUTPUT
+          else
+            echo "matched=false" >> $GITHUB_OUTPUT
+          fi
+
+  branch-cicd-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 25
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '25'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Lint with Checkstyle
+      run: mvn checkstyle:checkstyle
+      continue-on-error: true
+
+    - name: Build with Maven
+      run: mvn clean install -DskipTests
+
+    - name: Run tests
+      run: mvn test
