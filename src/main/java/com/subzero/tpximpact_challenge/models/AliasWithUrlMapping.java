@@ -1,3 +1,4 @@
+package com.subzero.tpximpact_challenge.models;
 import org.springframework.data.annotation.Id;
 
 import io.swagger.v3.oas.annotations.media.Schema;
