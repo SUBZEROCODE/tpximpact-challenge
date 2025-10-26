@@ -80,6 +80,10 @@ Acceptance criteria: working repository with basic tests with JPA with basic acc
 As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
 Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
+### FT-103-backend-changes-implementing-api
+As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
+Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
+
 ### FT-103-backend-api-changes-to-match-frontend-expectations
 As a java developer I want to provide my controller endpoints in a way which suits the frontend UI implementation.
 Acceptance criteria: FT-202-frontend-ui-visualisations-for-api works alongside backend endpoints with returns being given as expected.
