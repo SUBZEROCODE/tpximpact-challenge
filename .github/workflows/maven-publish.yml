@@ -38,3 +38,10 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+  deploy-ui:
+    needs: branch-cicd-pipeline
+    uses: ./.github/workflows/deploy-ui-as-container.yml
+    with:
+      image_name: url-shortener
+      image_tag: "release-0.0.2"
