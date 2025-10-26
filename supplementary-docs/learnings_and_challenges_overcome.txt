@@ -16,3 +16,6 @@
 
 - Spring boot flyway to setup the db based on the migration
 => The imports have changed in this newer version of Spring boot 4, finding them has been tricky and challenging to configure.
+
+- H2 console is not compatible with milestone variants of spring boot, maybe I went too cutting edge.
+=> Its frustrating as it should serve to db/console for easier debugging, may need to add a postgres db container if I have time.
