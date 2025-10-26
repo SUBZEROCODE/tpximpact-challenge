@@ -7,6 +7,7 @@ import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
 
 import java.util.Optional;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,21 @@ public class UrlShortenController {
 
     @PostMapping(value = "/shorten", consumes = "application/json")
     public ResponseEntity<String> shortenUrlRequest(@RequestBody String jsonBody) {
-        JSONObject bodyAsJsonObject = new JSONObject(jsonBody);
+        Optional<String> customAliasOptional;
+        String fullUrlProvided;
 
-        String fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
-        Optional<String> customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
+        // JSON serialisation is always something which can go wrong
+        // Or the required parameters are not provided "getString()" can also return JSONException.
+        try{
+            JSONObject bodyAsJsonObject = new JSONObject(jsonBody);
+            fullUrlProvided = bodyAsJsonObject.getString("fullUrl");
+            customAliasOptional = Optional.ofNullable(bodyAsJsonObject.getString("customAlias"));
 
-        if(!customAliasOptional.isPresent()){
-            return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            if(!customAliasOptional.isPresent()){
+                return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            }
+        } catch (JSONException e){
+            return new ResponseEntity<>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
         }
         
         String customAliasProvided = customAliasOptional.get();
