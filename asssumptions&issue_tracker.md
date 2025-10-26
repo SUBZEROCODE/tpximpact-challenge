@@ -76,10 +76,6 @@ Note: This will be release 0.0.2
 As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
 Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
 
-### FT-202-frontend-ui-visualisations-for-api - merged 🚀
-As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
-Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
-
 ### FT-105-backend-changes-implementing-api - merged 🚀
 As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
 Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
