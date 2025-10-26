@@ -66,7 +66,7 @@ Currently using `mvn checkstyle:check`, which does not break build if Checkstyle
 Acceptance criteria: Checkstyle passes with very minimal errors for Checkstyle 9.3
 Priority: lower priority over the functionality of the task.
 
-### Release-persisted-url-shortener-records
+### Release-persisted-url-shortener-records - released as 0.0.2 🚀
 As a developer I want to have a persisted store to save records into, this will also encompass changes required to bring in:
 Repositories, Services and DataSource to set up the db and provide required methods to interact using SQL.
 Acceptance criteria: Release provides functionality to persist data across restarts, this is visualised on the UI as a list of those persisted data and updates on changes.
@@ -76,18 +76,18 @@ Note: This will be release 0.0.2
 As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
 Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
 
-### FT-202-frontend-ui-visualisations-for-api
+### FT-202-frontend-ui-visualisations-for-api - merged 🚀
 As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
 Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
-### FT-105-backend-changes-implementing-api
+### FT-105-backend-changes-implementing-api - merged 🚀
 As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
 Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
 
-### FT-202-frontend-ui-visualisations-for-api
+### FT-202-frontend-ui-visualisations-for-api - merged 🚀
 As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
 Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
-### FT-104-backend-api-changes-to-match-frontend-expectations
+### FT-104-backend-api-changes-to-match-frontend-expectations - merged 🚀
 As a java developer I want to provide my controller endpoints in a way which suits the frontend UI implementation.
 Acceptance criteria: FT-202-frontend-ui-visualisations-for-api works alongside backend endpoints with returns being given as expected.
