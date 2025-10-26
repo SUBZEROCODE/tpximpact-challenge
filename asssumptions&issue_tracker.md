@@ -72,7 +72,7 @@ Repositories, Services and DataSource to set up the db and provide required meth
 Acceptance criteria: Release provides functionality to persist data across restarts, this is visualised on the UI as a list of those persisted data and updates on changes.
 Note: This will be release 0.0.2
 
-### FT-102-alias-with-url-mapping-repository - merged 🚀
+### FT-104-alias-with-url-mapping-repository - merged 🚀
 As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
 Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
 
@@ -80,11 +80,14 @@ Acceptance criteria: working repository with basic tests with JPA with basic acc
 As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
 Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
-### FT-103-backend-changes-implementing-api
+### FT-105-backend-changes-implementing-api
 As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
 Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
+
+### FT-202-frontend-ui-visualisations-for-api
+As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
+Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
 ### FT-104-backend-api-changes-to-match-frontend-expectations
 As a java developer I want to provide my controller endpoints in a way which suits the frontend UI implementation.
 Acceptance criteria: FT-202-frontend-ui-visualisations-for-api works alongside backend endpoints with returns being given as expected.
-Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
