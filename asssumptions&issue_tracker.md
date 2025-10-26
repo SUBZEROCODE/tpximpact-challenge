@@ -6,6 +6,9 @@
 - Its assumed that every record of alias, full-url and short-url will be complete.
 => Therefore if we get a record matching a given alias a full-url and short-url will be gettable for that record.
 
+- Its assumed that the shortUrl generated will always be "http://localhost:8080/api/v1/shortener/{{alias}}, the fullUrl can be any url to redirect to (including https).
+=> Therefore the short-url is always within the scope of the backend on port 8080.
+
 I'm going to treat the feature expectations and requirements as their own iterations by feature branch with the following identifiers for ease of use and clarification.
 Usually I'd expect my feature requirements and expectations for a given sprint to come from a project management tool such as JIRA, and this document is intended to mimic this issue ticket style.
 
@@ -68,3 +71,7 @@ Note: This will be release 0.0.2
 ### FT-102-alias-with-url-mapping-repository
 As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
 Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
+
+### FT-103-backend-changes-implementing-api
+As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
+Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
