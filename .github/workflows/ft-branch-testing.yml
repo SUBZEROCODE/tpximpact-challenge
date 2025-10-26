@@ -11,19 +11,19 @@ on:
 jobs:
   extract-commit-message:
     runs-on: ubuntu-latest
-      outputs:
-        matched: ${{ steps.check.outputs.matched }}
-      steps:
-        - uses: actions/checkout@v4
-        - id: check
-          run: |
-            msg=$(git log -1 --pretty=%B)
-            echo "Commit message: $msg"
-            if [[ "$msg" == *"run-ft-branch-cicd"* ]]; then
-              echo "matched=true" >> $GITHUB_OUTPUT
-            else
-              echo "matched=false" >> $GITHUB_OUTPUT
-            fi
+    outputs:
+      matched: ${{ steps.check.outputs.matched }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "Commit message: $msg"
+          if [[ "$msg" == *"run-ft-branch-cicd"* ]]; then
+            echo "matched=true" >> $GITHUB_OUTPUT
+          else
+            echo "matched=false" >> $GITHUB_OUTPUT
+          fi
 
   branch-cicd-pipeline:
     runs-on: ubuntu-latest
