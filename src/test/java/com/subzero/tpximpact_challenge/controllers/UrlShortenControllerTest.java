@@ -88,15 +88,6 @@ public class UrlShortenControllerTest {
     }
 
     @Test
-    void shortenUrlRequestPostEndpointShouldReturnBadRequestGivenNoImplementationCurrently() throws Exception {
-        mockMvc.perform(post("/api/v1/url-shortener/shorten")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{customAlias: \"my-alias\", fullUrl: \"http://example.com/some/long/url\"}"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid input or alias already taken"));
-    }
-
-    @Test
     public void shortenUrlRequestPostEndpointShouldReturnBadRequestIfExceptionFromService() throws Exception {
         AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
 
