@@ -1,17 +1,32 @@
 # This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
-name: Test Release Branch of Url Shortener
+name: Test Feature Branch of Url Shortener (if commit matches "run-ft-branch-cicd")
 
 on:
   push:
     branches:
-      - 'Release*'  # Matches any branch starting with 'Release'
+      - 'FT-*'
 
 jobs:
-  release-checks:
+  extract-commit-message:
     runs-on: ubuntu-latest
+    outputs:
+      matched: ${{ steps.check.outputs.matched }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "Commit message: $msg"
+          if [[ "$msg" == *"run-ft-branch-cicd"* ]]; then
+            echo "matched=true" >> $GITHUB_OUTPUT
+          else
+            echo "matched=false" >> $GITHUB_OUTPUT
+          fi
 
+  branch-cicd-pipeline:
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4

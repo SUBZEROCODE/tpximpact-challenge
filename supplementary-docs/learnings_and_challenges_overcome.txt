@@ -10,3 +10,12 @@
 - Use of PathVariable at a dynamic level with a url.
 => I've used PathVariable to retrieve what is passed to the GET method of the API before, but using this at a controller level with a dynamic route was a fun challenge.
     - The key here was using String.format as when I was passing the string via the url otherwise it wasn't correctly being understood to be the path variable.
+
+- Github Actions - linting failing build for backend
+=> mvn checkstyle was tricky and turned out it was because it was always being executed, despite me already having a stage for `mvn checkstyle:check`
+
+- Spring boot flyway to setup the db based on the migration
+=> The imports have changed in this newer version of Spring boot 4, finding them has been tricky and challenging to configure.
+
+- H2 console is not compatible with milestone variants of spring boot, maybe I went too cutting edge.
+=> Its frustrating as it should serve to db/console for easier debugging, may need to add a postgres db container if I have time.
