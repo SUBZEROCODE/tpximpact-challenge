@@ -9,7 +9,7 @@ on:
       - 'Release*'  # Matches any branch starting with 'Release'
 
 jobs:
-  build:
+  release-checks:
     runs-on: ubuntu-latest
 
     steps:
