@@ -68,3 +68,7 @@ Note: This will be release 0.0.2
 ### FT-102-alias-with-url-mapping-repository
 As a java developer I want to have a JPA respository to save my objects into, ready for integration into a persistant store.
 Acceptance criteria: working repository with basic tests with JPA with basic accessor methods added.
+
+### FT-103-backend-changes-implementing-api
+As a java developer I want to have full implementations completed for all endpoints in the openapi spec ready for frontend visualisations.
+Acceptance criteria: All endpoints within openapi.yml are successfully implemented.
