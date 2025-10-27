@@ -103,3 +103,7 @@ Acceptance criteria: Sensible code coverage percentage achieved with functionali
 ## Release-more-advanced-api-features-added 0.0.3
 As a developer I want to have more production ready features including endpoint exposing for debugging containers and other more advanced features.
 Acceptance criteria: Additions for the backend API to add endpoints exposed by spring and more advanced testing features for containerisation purpose.
+
+## FT-004-containerised-testing-poc
+As a developer I want to investigate the Java 25 testcontainers feature for my tests.
+Acceptance criteria: Add simple test for container which uses docker java features to check SQL within the container.
