@@ -23,11 +23,13 @@ This is mainly so that I can record my ideas but also can add my overnight eurek
 
 - Could showcase some interesting features of Java 25 like stream operators and Record data structures.
 
-- Gitlab CI/CD integrations with gitlab-ci.yaml file
+- Gitlab CI/CD integrations with gitlab-ci.yaml file 
+=> This was done with Github actions workflow in the end
 
 - Branch and release strategy using dev/test and prod branches and building appropriate containers with specific properties.
 
 - Security implementation with WebSecurityConfigurerAdapter and in particular - use of CORS to limit which urls frontend traffic can send to and enforce security by design.
+=> This was required to get cross origin requests working from frontend to backend
 
 - Endpoint E2E testing (possibly could use curl/postman and add to demo).
 
