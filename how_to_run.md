@@ -49,9 +49,9 @@ You can run the code in standard mode or debug, the prerequisite is that you hav
    This will build a .jar/.war to your specifications as defined in the pom.xml (e.g. version and name etc)
 
 ## Building as a Dockerfile
-7) Change directory to location of the Dockerfile and run: `docker build -t url-shortener:{{insert_version}}
+7) Change directory to location of the Dockerfile and run: `docker build -t url-shortener:{{insert_version}} .`
    This will build the image locally using the layers specified in your dockerfile. (e.g. layers for file changes, layers for artifact placement in folder structure)
 
 ## Running the Dockerfile
-8) docker run -p 8080:8080 --name=url-shortener-v{{insert_version}} url-shortener:{{insert_version}}
+8) `docker run -p 8080:8080 --name=url-shortener-v{{insert_version}} url-shortener:{{insert_version}}`
    This will run the container on port 8080 named url-shortener

@@ -8,7 +8,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  branch-cicd-pipeline:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,3 +42,10 @@ jobs:
     - name: Verify code coverage expectation is met
       run: mvn verify -DskipTests
       continue-on-error: true
+
+  deploy-ui:
+    needs: branch-cicd-pipeline
+    uses: ./.github/workflows/deploy-api-as-container.yml
+    with:
+      image_name: url-shortener
+      image_tag: "release-0.0.2"
