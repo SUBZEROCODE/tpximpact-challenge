@@ -43,6 +43,7 @@ You can run the code in standard mode or debug, the prerequisite is that you hav
       - Or individual tests: clicking the button on the test I am looking at running/debugging.
 
 5b) Checking code coverage can be done with `mvn clean test` which will generate coverage report in: `target/site/jacoco/index.html`
+This can be enforced by running `mvn clean verify` which runs tests and checks code coverage percentages match expectations.
 
 ## Building the artifact
 6) Run `mvn package`
