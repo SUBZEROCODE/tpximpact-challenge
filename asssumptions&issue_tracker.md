@@ -99,3 +99,7 @@ Acceptance criteria: Dockerfiles created to build code for frontend and backend 
 ### FT-003-code-coverage-testing-improvements
 As a tester of the app I want to have code coverage up to reasonable levels for both frontend and backend.
 Acceptance criteria: Sensible code coverage percentage achieved with functionality tested where suitable.
+
+## Release-more-advanced-api-features-added 0.0.3
+As a developer I want to have more production ready features including endpoint exposing for debugging containers and other more advanced features.
+Acceptance criteria: Additions for the backend API to add endpoints exposed by spring and more advanced testing features for containerisation purpose.
