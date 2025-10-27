@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/url-shortener")
 public class BasicHealthController {
 
-        @GetMapping("/health")
-        public ResponseEntity<String> healthCheck() {
-            return new ResponseEntity<String>("Java Spring is ready to serve the API", HttpStatus.OK);
-        }
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        return new ResponseEntity<String>("Java Spring is ready to serve the API", HttpStatus.OK);
+    }
     
 }
