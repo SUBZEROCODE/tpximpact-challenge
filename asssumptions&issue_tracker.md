@@ -15,6 +15,8 @@
 
 - Assuming that a user will always have to provide a custom-alias and fullUrl, as this is what my frontend component enforces.
 
+- Code coverage would be nice to get to the maven expected value of 70% however this project is time constrained so just testing the crucial components for now.
+
 I'm going to treat the feature expectations and requirements as their own iterations by feature branch with the following identifiers for ease of use and clarification.
 Usually I'd expect my feature requirements and expectations for a given sprint to come from a project management tool such as JIRA, and this document is intended to mimic this issue ticket style.
 
