@@ -88,7 +88,7 @@ Acceptance criteria: All endpoints within openapi.yml are successfully implement
 As an angular developer I want to provide a simple UI for visualising outputs from backend endpoints within the openapi spec.
 Acceptance criteria: Services set up for endpoints which have been implemented with simple UI view to complement the returns of data.
 
-### FT-104-backend-api-changes-to-match-frontend-expectations - merged 🚀
+### FT-106-backend-api-changes-to-match-frontend-expectations - merged 🚀
 As a java developer I want to provide my controller endpoints in a way which suits the frontend UI implementation.
 Acceptance criteria: FT-202-frontend-ui-visualisations-for-api works alongside backend endpoints with returns being given as expected.
 
@@ -99,3 +99,7 @@ Acceptance criteria: Dockerfiles created to build code for frontend and backend 
 ### FT-003-code-coverage-testing-improvements
 As a tester of the app I want to have code coverage up to reasonable levels for both frontend and backend.
 Acceptance criteria: Sensible code coverage percentage achieved with functionality tested where suitable.
+
+### FT-107-docker-endpoints-monitoring
+As a backend engineer I want to add endpoints monitoring so that my container can be microservice integrated in future.
+Acceptance criteria: Add further status check endpoints to check docker container health prior to starting backend (currently we have heath controller)
