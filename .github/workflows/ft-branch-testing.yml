@@ -54,3 +54,7 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+    - name: Verify code coverage expectation is met
+      run: mvn verify -DskipTests
+      continue-on-error: true
