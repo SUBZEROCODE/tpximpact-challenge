@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
@@ -74,7 +75,9 @@ public class UrlShortenControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(invalidJSONTest.toString()))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid request content"));
+                .andExpect(result -> assertTrue(
+                    result.getResolvedException() instanceof MethodArgumentNotValidException
+                ));
     }
 
     @Test

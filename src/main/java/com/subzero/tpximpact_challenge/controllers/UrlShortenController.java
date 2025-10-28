@@ -67,7 +67,7 @@ public class UrlShortenController {
             AliasWithUrlMapping aliasToSave = new AliasWithUrlMapping(customAliasProvided, fullUrlProvided);
             aliasUrlMappingService.saveAliasWithUrlMappingToRepo(aliasToSave);
         } catch (Exception e){
-                return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>("URL successfully shortened", HttpStatus.CREATED);
     }
