@@ -1,6 +1,10 @@
 package com.subzero.tpximpact_challenge;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -31,5 +35,15 @@ public class ContainerAppConfig {
 	@PostConstruct
     public void init() {
         System.out.println("AppConfig initialized with URL: " + url + ", USER: " + username + ", DB: " + name);
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        return DataSourceBuilder.create()
+            .url(url)
+            .username(username)
+            .password(password)
+            .driverClassName(driver)
+            .build();
     }
 }

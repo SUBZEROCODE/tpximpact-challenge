@@ -1,27 +1,30 @@
 package com.subzero.tpximpact_challenge.containers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import javax.sql.DataSource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import com.subzero.tpximpact_challenge.ContainerAppConfig;
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 import com.subzero.tpximpact_challenge.repository.AliasUrlMappingRepository;
 import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
 import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
 
-@DataJpaTest
+@SpringBootTest
 @Testcontainers
-@Import({AliasUrlMappingService.class, ContainerAppConfig.class})
 public class PostgresSQLContainerTest {
     @Autowired
     private AliasUrlMappingRepository aliasUrlMappingRepository;
@@ -36,30 +39,30 @@ public class PostgresSQLContainerTest {
             .withPassword("container-pass")
             .withDatabaseName("java-test-db");
 
+    @DynamicPropertySource
+    static void overrideProperties(DynamicPropertyRegistry registry) {
+        registry.add("db.url", postgresContainerisedDb::getJdbcUrl);
+        registry.add("db.username", postgresContainerisedDb::getUsername);
+        registry.add("db.password", postgresContainerisedDb::getPassword);
+        registry.add("db.driver", postgresContainerisedDb::getDriverClassName);
+        registry.add("spring.flyway.enabled", () -> false);
+    }
+
     @Autowired
-    private ContainerAppConfig containerAppConfig;
+    DataSource dataSource;
 
     @BeforeEach
     void setUp() {
-        containerAppConfig = new ContainerAppConfig();
-        containerAppConfig.setUrl(postgresContainerisedDb.getJdbcUrl());
-        containerAppConfig.setUsername(postgresContainerisedDb.getUsername());
-        containerAppConfig.setPassword(postgresContainerisedDb.getPassword());
-        containerAppConfig.setName(postgresContainerisedDb.getDatabaseName());
-        aliasUrlMappingService = new AliasUrlMappingService(aliasUrlMappingRepository );
+        aliasUrlMappingService = new AliasUrlMappingService(aliasUrlMappingRepository);
     }
 
     @Test
-    void testPostgresContainerProperties() {
+    void testPostgresContainerPropertiesOnceStarted() {
         try  {
             postgresContainerisedDb.start();
             postgresContainerisedDb.waitingFor(Wait.forListeningPort());
             assertEquals("container-test", postgresContainerisedDb.getUsername());
             assertEquals("container-pass", postgresContainerisedDb.getPassword());
-
-            // Java maps its internal port of 5432 to a mapped port for its JDBC usage.
-            String jdbcUrlWithRandomMappedPort = String.format("jdbc:postgresql://localhost:%d/java-test-db?loggerLevel=OFF", postgresContainerisedDb.getMappedPort(5432));
-            assertEquals(jdbcUrlWithRandomMappedPort, postgresContainerisedDb.getJdbcUrl());
             assertEquals("java-test-db", postgresContainerisedDb.getDatabaseName()); // default db name
         } finally {
             postgresContainerisedDb.stop();
@@ -67,10 +70,16 @@ public class PostgresSQLContainerTest {
     }
 
     @Test
+    @Sql("/db/migration/V1__create_table_alias_url_mappings.sql")
     void testGetMostPopularFullUrlFromWithinPostgresDBEnvironment() {
     try {
         // Wait for postgres to be healthy for use
         postgresContainerisedDb.waitingFor(Wait.forListeningPort());
+        String expectedContainerisedJdbcUrl = postgresContainerisedDb.getJdbcUrl();
+        String actualJdbcUrlFromDatasource = dataSource.getConnection().getMetaData().getURL();
+
+        assertTrue(actualJdbcUrlFromDatasource.contains(expectedContainerisedJdbcUrl));
+
         AliasWithUrlMapping aliasWithUrlMappingTest = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
         String localHostUrl = "http://localhost:8080/";
         String popularTestUrl = "http://www.example.test.com/some/popular/url";
