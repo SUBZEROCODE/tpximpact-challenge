@@ -103,3 +103,7 @@ Acceptance criteria: Sensible code coverage percentage achieved with functionali
 ## Release-more-advanced-api-features-added 0.0.3
 As a developer I want to have more production ready features including endpoint exposing for debugging containers and other more advanced features.
 Acceptance criteria: Additions for the backend API to add endpoints exposed by spring and more advanced testing features for containerisation purpose.
+
+## FT-108-random-alias-if-none-provided
+As a java developer I want to provide a more custom implementation of /shorten method, this will save a random alias if none is provided to the API
+Acceptance criteria: User can provide no value for alias in their request and backend will take this to create a record for its own "generated alias".
