@@ -3,11 +3,13 @@ package com.subzero.tpximpact_challenge.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
 
@@ -51,5 +53,27 @@ class AliasUrlMappingRepositoryTest {
         List<AliasWithUrlMapping> urlMappingsReturnedAfterDelete = aliasUrlMappingRepository.findAll();
         assertEquals(urlMappingsReturnedAfterDelete.get(0), aliasWithUrlMappingSecond); 
         assertEquals(urlMappingsReturnedAfterDelete.size(), 1);
+    }
+
+    @Test
+    void getMostPopularFullUrlShouldReturnMostPopularUrlWhenOneExists(){
+        AliasWithUrlMapping aliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+        aliasUrlMappingRepository.save(aliasWithUrlMapping);
+
+        String popularTestUrl = "http://www.example.test.com/some/popular/url";
+        AliasWithUrlMapping aliasWithUrlMappingPopular = MockAliasUrlMappingBuilder.getCustomStubbedAliasWithUrlMappingForTesting("some-testing-alias", popularTestUrl, "http://localhost:8080/some-testing-alias");
+        aliasUrlMappingRepository.save(aliasWithUrlMappingPopular);
+
+        AliasWithUrlMapping aliasWithUrlMappingPopular2 = MockAliasUrlMappingBuilder.getCustomStubbedAliasWithUrlMappingForTesting("some-testing-alias", popularTestUrl, "http://localhost:8080/some-testing-alias");
+        aliasUrlMappingRepository.save(aliasWithUrlMappingPopular2);
+
+        Optional<String> mostPopularFullUrl = aliasUrlMappingRepository.getMostPopularFullUrl();
+        assertEquals(popularTestUrl, mostPopularFullUrl.get());
+    }
+
+    @Test
+    void getMostPopularFullUrlShouldReturnEmptyOptionalWhenNoRecordsHaveBeenSaved(){
+        Optional<String> mostPopularFullUrl = aliasUrlMappingRepository.getMostPopularFullUrl();
+        assertEquals(false, mostPopularFullUrl.isPresent());
     }
 }
