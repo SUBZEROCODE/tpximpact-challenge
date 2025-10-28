@@ -29,6 +29,7 @@ public class UrlShortenController {
     public ResponseEntity<String> shortenUrlRequest(@Valid @RequestBody UrlShortenRequestDTO urlShortenRequestDTO) {
         Optional<String> customAliasOptional;
         String fullUrlProvided;
+        boolean aliasGenerated = false;
 
         // JSON serialisation is always something which can go wrong
         // Or the required parameters are not provided "getString()" can also return JSONException.
@@ -41,6 +42,7 @@ public class UrlShortenController {
                 // This means that the generated alias will always be the number of elements in DB, if 2 already - then it will be 3 (never colliding)
                 int currentSizeOfDB = aliasUrlMappingService.findAllAliasWithUrlMappingRecordsInRepo().size() + 1;
                 customAliasOptional = Optional.of("mini-" + String.valueOf(currentSizeOfDB));
+                aliasGenerated = true;
             }
 
         } catch (HttpMessageNotReadableException e){
@@ -53,7 +55,12 @@ public class UrlShortenController {
         Optional<AliasWithUrlMapping> aliasWithUrlMappingStoredInDb = aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(customAliasProvided);
 
         if(aliasWithUrlMappingStoredInDb.isPresent()){
-            return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            // If generated and collides with a previously added alias
+            if(aliasGenerated) {
+                customAliasProvided = customAliasProvided + "ford";
+            } else {
+                return new ResponseEntity<String>("Invalid input or alias already taken", HttpStatus.BAD_REQUEST);
+            }
         }
 
         try {
