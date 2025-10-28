@@ -1,5 +1,17 @@
 package com.subzero.tpximpact_challenge.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -7,23 +19,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.security.autoconfigure.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
+import com.subzero.tpximpact_challenge.models.UrlShortenRequestDTO;
 import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
 import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest(value = UrlShortenController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class UrlShortenControllerTest {
@@ -35,12 +39,32 @@ public class UrlShortenControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shortenUrlRequestPostEndpointShouldReturn200AndSuccess() throws Exception {
+    public void shortenUrlRequestPostEndpointShouldReturn200AndSuccessWhenObjectCanBeSavedSuccessfully() throws Exception {
         AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
 
-        JSONObject request = new JSONObject();
-        request.put("fullUrl", testAliasWithUrlMapping.getFullUrl());
-        request.put("customAlias", testAliasWithUrlMapping.getAlias());
+        UrlShortenRequestDTO testRequestDTO = new UrlShortenRequestDTO();
+        testRequestDTO.setFullUrl(testAliasWithUrlMapping.getFullUrl());
+        testRequestDTO.setCustomAlias(testAliasWithUrlMapping.getAlias());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // This mocks that the alias has not been saved before
+        Mockito.when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAliasWithUrlMapping.getAlias()))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/api/v1/url-shortener/shorten")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(testRequestDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("URL successfully shortened"));
+    }
+
+    @Test
+    public void shortenUrlRequestPostEndpointShouldReturnBadRequestWhenInvalidDataIsSentToDTO() throws Exception {
+        AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+
+        JSONObject invalidJSONTest = new JSONObject();
+        invalidJSONTest.put("fullUl", testAliasWithUrlMapping.getFullUrl());
 
         // Mocked so does not need to return anything.
         Mockito.when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAliasWithUrlMapping.getAlias()))
@@ -48,18 +72,20 @@ public class UrlShortenControllerTest {
 
         mockMvc.perform(post("/api/v1/url-shortener/shorten")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request.toString()))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("URL successfully shortened"));
+                .content(invalidJSONTest.toString()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Invalid request content"));
     }
 
     @Test
-    public void shortenUrlRequestPostEndpointShouldReturn400IfAliasAlreadyExists() throws Exception {
+    public void shortenUrlRequestPostEndpointShouldReturnBadRequestIfAliasAlreadyExists() throws Exception {
         AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
 
-        JSONObject request = new JSONObject();
-        request.put("fullUrl", testAliasWithUrlMapping.getFullUrl());
-        request.put("customAlias", testAliasWithUrlMapping.getAlias());
+        UrlShortenRequestDTO testRequestDTO = new UrlShortenRequestDTO();
+        testRequestDTO.setFullUrl(testAliasWithUrlMapping.getFullUrl());
+        testRequestDTO.setCustomAlias(testAliasWithUrlMapping.getAlias());
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         // Mocked so does not need to return anything.
         Mockito.when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAliasWithUrlMapping.getAlias()))
@@ -67,33 +93,63 @@ public class UrlShortenControllerTest {
 
         mockMvc.perform(post("/api/v1/url-shortener/shorten")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request.toString()))
+                .content(objectMapper.writeValueAsString(testRequestDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid input or alias already taken"));
     }
 
 
      @Test
-    public void shortenUrlRequestPostEndpointShouldReturn400IfMissingAliasInJSON() throws Exception {
-        AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+    public void shortenUrlRequestPostEndpointShouldReturnSuccessWhenGeneratedAliasSavedSuccessfully() throws Exception {
+        AliasWithUrlMapping expectedAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
 
-        JSONObject request = new JSONObject();
-        request.put("fullUrl", testAliasWithUrlMapping.getFullUrl());
+        UrlShortenRequestDTO testRequestDTO = new UrlShortenRequestDTO();
+        testRequestDTO.setFullUrl(expectedAliasWithUrlMapping.getFullUrl());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // Adapt expectedUrlMapping to include the "generated alias" 
+        // This is "mini-" the number of items in AliasUrlMappingRepository + 1
+        expectedAliasWithUrlMapping.setShortUrl("http://localhost:8080/mini-1");
+        expectedAliasWithUrlMapping.setAlias("mini-1");
 
         mockMvc.perform(post("/api/v1/url-shortener/shorten")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request.toString()))
+                .content(objectMapper.writeValueAsString(testRequestDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("URL successfully shortened"));
+
+        verify(aliasUrlMappingService).saveAliasWithUrlMappingToRepo(expectedAliasWithUrlMapping);
+    }
+
+    @Test
+    public void shortenUrlRequestPostEndpointShouldReturnBadRequestWhenMalformedJsonIsSentToDTO() throws Exception {
+        AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+
+        String malformedJson = "{ \"fullUrl\": \"http://example.com\", \"customAlias\": ";
+
+        // Mocked so does not need to return anything.
+        Mockito.when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAliasWithUrlMapping.getAlias()))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/api/v1/url-shortener/shorten")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(malformedJson))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Invalid input or alias already taken"));
+                .andExpect(result -> assertTrue(
+                    result.getResolvedException() instanceof HttpMessageNotReadableException
+                ));
     }
 
     @Test
     public void shortenUrlRequestPostEndpointShouldReturnBadRequestIfExceptionFromService() throws Exception {
         AliasWithUrlMapping testAliasWithUrlMapping = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
 
-        JSONObject request = new JSONObject();
-        request.put("fullUrl", testAliasWithUrlMapping.getFullUrl());
-        request.put("customAlias", testAliasWithUrlMapping.getAlias());
+        UrlShortenRequestDTO testRequestDTO = new UrlShortenRequestDTO();
+        testRequestDTO.setFullUrl(testAliasWithUrlMapping.getFullUrl());
+        testRequestDTO.setCustomAlias(testAliasWithUrlMapping.getAlias());
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         Mockito.when(aliasUrlMappingService.findAliasBasedOnParameterAliasPassedIn(testAliasWithUrlMapping.getAlias()))
                 .thenReturn(Optional.empty());
@@ -103,13 +159,13 @@ public class UrlShortenControllerTest {
 
         mockMvc.perform(post("/api/v1/url-shortener/shorten")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request.toString()))
+                .content(objectMapper.writeValueAsString(testRequestDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Invalid input or alias already taken"));
     }
 
     @Test
-    void listAllShortenedUrlsGetEndpointShouldReturnEmptyArray() throws Exception {
+    void listAllShortenedUrlsGetEndpointShouldReturnEmptyArrayIfNoRecordsFound() throws Exception {
         mockMvc.perform(get("/api/v1/url-shortener/urls")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
