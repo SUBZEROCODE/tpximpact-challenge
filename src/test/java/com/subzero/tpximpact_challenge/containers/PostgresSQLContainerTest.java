@@ -53,6 +53,7 @@ public class PostgresSQLContainerTest {
     void testPostgresContainerProperties() {
         try  {
             postgresContainerisedDb.start();
+            postgresContainerisedDb.waitingFor(Wait.forListeningPort());
             assertEquals("container-test", postgresContainerisedDb.getUsername());
             assertEquals("container-pass", postgresContainerisedDb.getPassword());
 
