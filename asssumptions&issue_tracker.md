@@ -92,11 +92,11 @@ Acceptance criteria: Services set up for endpoints which have been implemented w
 As a java developer I want to provide my controller endpoints in a way which suits the frontend UI implementation.
 Acceptance criteria: FT-202-frontend-ui-visualisations-for-api works alongside backend endpoints with returns being given as expected.
 
-### FT-002-containerised-app-artifacts
+### FT-002-containerised-app-artifacts - merged 🚀
 As a developer of the app I want to containerise my application code, so that it can used as a container within Docker for frontend and backend.
 Acceptance criteria: Dockerfiles created to build code for frontend and backend and if possible integrate this with CICD to build docker images to registry.
 
-### FT-003-code-coverage-testing-improvements
+### FT-003-code-coverage-testing-improvements - merged 🚀
 As a tester of the app I want to have code coverage up to reasonable levels for both frontend and backend.
 Acceptance criteria: Sensible code coverage percentage achieved with functionality tested where suitable.
 
