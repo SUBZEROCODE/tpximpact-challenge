@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
+import com.subzero.tpximpact_challenge.ContainerAppConfig;
 import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 import com.subzero.tpximpact_challenge.repository.AliasUrlMappingRepository;
 
@@ -17,7 +18,10 @@ public class AliasUrlMappingService {
     @Autowired
     private AliasUrlMappingRepository urlMappingRepository;
 
-    AliasUrlMappingService(AliasUrlMappingRepository urlMappingRepository){
+    @Autowired
+    ContainerAppConfig appConfig;
+
+    public AliasUrlMappingService(AliasUrlMappingRepository urlMappingRepository){
         this.urlMappingRepository = urlMappingRepository;
     }
 
@@ -49,6 +53,16 @@ public class AliasUrlMappingService {
         } catch (Exception e) {
             // Fallback for unexpected issues
             System.err.println("Unexpected error during delete: " + e.getMessage());
+        }
+    }
+
+    public String getMostPopularFullUrl(){
+        Optional<String> mostPopularUrlOptional = urlMappingRepository.getMostPopularFullUrl();
+
+        if(mostPopularUrlOptional.isPresent()){
+            return mostPopularUrlOptional.get();
+        } else {
+            return "NO POPULAR RECORD FOUND";
         }
     }
 

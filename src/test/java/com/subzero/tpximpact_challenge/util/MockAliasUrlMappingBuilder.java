@@ -16,7 +16,7 @@ public class MockAliasUrlMappingBuilder {
         if(fullUrl.isEmpty()){
             aliasWithUrlMapping.setFullUrl("https://example.com/very/long/url");
         } else {
-            aliasWithUrlMapping.setAlias(fullUrl);
+            aliasWithUrlMapping.setFullUrl(fullUrl);
         }
 
         if(shortUrl.isEmpty()){

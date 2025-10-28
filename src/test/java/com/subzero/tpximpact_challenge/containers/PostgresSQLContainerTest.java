@@ -1,6 +1,7 @@
 package com.subzero.tpximpact_challenge.containers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.subzero.tpximpact_challenge.ContainerAppConfig;
+import com.subzero.tpximpact_challenge.models.AliasWithUrlMapping;
 import com.subzero.tpximpact_challenge.repository.AliasUrlMappingRepository;
 import com.subzero.tpximpact_challenge.service.AliasUrlMappingService;
+import com.subzero.tpximpact_challenge.util.MockAliasUrlMappingBuilder;
 
 @DataJpaTest
 @Testcontainers
@@ -43,7 +47,6 @@ public class PostgresSQLContainerTest {
         containerAppConfig.setPassword(postgresContainerisedDb.getPassword());
         containerAppConfig.setName(postgresContainerisedDb.getDatabaseName());
         aliasUrlMappingService = new AliasUrlMappingService(aliasUrlMappingRepository );
-        //aliasUrlMappingService.modifyAppConfigUsedToAnotherDatasource(appConfig);
     }
 
     @Test
@@ -60,5 +63,33 @@ public class PostgresSQLContainerTest {
         } finally {
             postgresContainerisedDb.stop();
         }
+    }
+
+    @Test
+    void testGetMostPopularFullUrlFromWithinPostgresDBEnvironment() {
+    try {
+        // Wait for postgres to be healthy for use
+        postgresContainerisedDb.waitingFor(Wait.forListeningPort());
+        AliasWithUrlMapping aliasWithUrlMappingTest = MockAliasUrlMappingBuilder.getStubbedAliasWithUrlMappingForTesting();
+        String localHostUrl = "http://localhost:8080/";
+        String popularTestUrl = "http://www.example.test.com/some/popular/url";
+        AliasWithUrlMapping aliasWithUrlMappingWithSameTestFullUrl = MockAliasUrlMappingBuilder.getCustomStubbedAliasWithUrlMappingForTesting(
+            "popular-test-alias", "http://www.example.test.com/some/popular/url", localHostUrl + "popular-test-alias"
+        );
+        AliasWithUrlMapping aliasWithUrlMappingWithSameTestFullUrl2 = MockAliasUrlMappingBuilder.getCustomStubbedAliasWithUrlMappingForTesting(
+            "popular-test-alias2", "http://www.example.test.com/some/popular/url", localHostUrl + "popular-test-alias2"
+        );
+
+        aliasUrlMappingRepository.save(aliasWithUrlMappingTest);
+        aliasUrlMappingRepository.save(aliasWithUrlMappingWithSameTestFullUrl);
+        aliasUrlMappingRepository.save(aliasWithUrlMappingWithSameTestFullUrl2);
+
+        String mostPopularFullUrl = aliasUrlMappingService.getMostPopularFullUrl();
+        assertEquals(popularTestUrl, mostPopularFullUrl);
+    } catch (Exception e) {
+        fail("Exception during database connection test: " + e.getMessage());
+    } finally {
+        postgresContainerisedDb.stop();
+    }
     }
 }
